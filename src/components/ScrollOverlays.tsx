@@ -39,7 +39,6 @@ export function ScrollOverlays({ scrollProgressRef }: ScrollOverlaysProps) {
 
         card1Ref.current.style.opacity = String(opacity)
         card1Ref.current.style.transform = `translate(-50%, -50%) translateY(${yOffset}vh)`
-        card1Ref.current.style.pointerEvents = opacity > 0.1 ? 'auto' : 'none'
       }
 
       // Card 2 ("The Infinite"):
@@ -73,7 +72,6 @@ export function ScrollOverlays({ scrollProgressRef }: ScrollOverlaysProps) {
 
         card2Ref.current.style.opacity = String(opacity)
         card2Ref.current.style.transform = `translate(-50%, -50%) translateY(${yOffset}vh)`
-        card2Ref.current.style.pointerEvents = opacity > 0.1 ? 'auto' : 'none'
       }
 
       // Card 3 ("Cosmic Tunnel"):
@@ -110,7 +108,6 @@ export function ScrollOverlays({ scrollProgressRef }: ScrollOverlaysProps) {
         card3Ref.current.style.opacity = String(opacity)
         card3Ref.current.style.transform =
           `translate(-50%, -50%) translateY(${yOffset}vh) perspective(500px) rotateX(${rotateX}deg) scale(${scale})`
-        card3Ref.current.style.pointerEvents = opacity > 0.1 ? 'auto' : 'none'
       }
 
       // Flash overlay:

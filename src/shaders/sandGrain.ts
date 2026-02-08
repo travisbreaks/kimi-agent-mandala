@@ -87,13 +87,15 @@ export const sandVertexShader = `
   }
 
   // Compute cylindrical tunnel position for a particle
-  vec3 getTunnelPosition(float phase, float scale, float zOff) {
-    float angle = phase * 6.28318;
+  // baseAngle: derived from mandala geometry (atan2) — seamless, no 0/1 seam
+  // twistScale controls time-based spin (0=static helix, 1=full continuous spin)
+  vec3 getTunnelPosition(float baseAngle, float phase, float scale, float zOff, float twistScale) {
     float radius = 1.8 + fract(scale * 7.0) * 1.2;
     float baseZ = fract(phase * 13.37) * 26.0;
     float zPos = mod(baseZ + zOff, 26.0) - 20.0;
-    float twist = zPos * 0.08 + uTime * 0.3;
-    return vec3(cos(angle + twist) * radius, sin(angle + twist) * radius, zPos);
+    // Position-based twist (static helix) always on; time-based spin scales in
+    float twist = zPos * 0.08 + uTime * 0.3 * twistScale;
+    return vec3(cos(baseAngle + twist) * radius, sin(baseAngle + twist) * radius, zPos);
   }
 
   void main() {
@@ -107,6 +109,9 @@ export const sandVertexShader = `
     vec3 finalPosition;
     vTunnelPhase = 0.0;
     vBuildAlpha = 1.0;
+
+    // Base angle from mandala geometry — naturally seamless (no 0/1 seam like linear phase)
+    float baseAngle = atan(aTargetPosition.y, aTargetPosition.x);
 
     if (uScrollProgress < 0.5) {
       // ===== BUILD PHASE (0-50%) — fly-in from off-screen to mandala =====
@@ -149,7 +154,8 @@ export const sandVertexShader = `
       vec3 explosionEnd = aTargetPosition + explosionDir * explosionDist;
 
       // Tunnel target position (cylindrical)
-      vec3 tunnelPos = getTunnelPosition(aPhase, aScale, 0.0);
+      // Ramp twist from 0→1 during convergence so spin builds gradually
+      vec3 tunnelPos = getTunnelPosition(baseAngle, aPhase, aScale, 0.0, easedT);
 
       // Smooth blend: explosion end → tunnel cylinder
       finalPosition = mix(explosionEnd, tunnelPos, easedT);
@@ -158,7 +164,10 @@ export const sandVertexShader = `
     } else {
       // ===== TUNNEL PHASE (85-100%) — infinite rush via Z-modulo recycling =====
       float tunnelT = (uScrollProgress - 0.85) / 0.15;
-      finalPosition = getTunnelPosition(aPhase, aScale, tunnelT * 40.0);
+      // Quadratic ease-in: velocity starts at 0 (matching convergence end)
+      // then gradually accelerates into full rush — no jarring snap
+      float easedTunnelT = tunnelT * tunnelT;
+      finalPosition = getTunnelPosition(baseAngle, aPhase, aScale, easedTunnelT * 40.0, 1.0);
       vTunnelPhase = 1.0;
     }
 
