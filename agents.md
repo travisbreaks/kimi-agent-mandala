@@ -139,7 +139,7 @@ CAMERA_CONFIG: { position: [0, 0, 4], fov: 60 }
 
 **Live**: travisbreaks.org/research/kimi-agent-mandala/
 
-Deployed as a subdirectory of travisBREAKS (not a separate Netlify site). The CI workflow (`deploy-netlify.yml`) runs `cd Kimi_Agent_Mandala && npm ci && npm run build`, then copies the dist into `travisBREAKS/research/kimi-agent-mandala/` before deploying the whole travisBREAKS directory.
+Deployed as a subdirectory of travisbreaks-site (not a separate Netlify site). The CI workflow (`deploy-netlify.yml`) runs `cd Kimi_Agent_Mandala && npm ci && npm run build`, then copies the dist into `travisbreaks-site/research/kimi-agent-mandala/` before deploying the whole travisbreaks-site directory.
 
 **Research page card**: Listed as "Sri Yantra Scrollytelling" (Project 004) with gold accent color.
 **Back button**: "← Research" in the HUD links to `../` (relative to kimi-agent-mandala/).
