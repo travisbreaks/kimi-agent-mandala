@@ -1,4 +1,4 @@
-import { useRef, useCallback, type PointerEvent } from 'react'
+import { type PointerEvent, useCallback, useRef } from 'react'
 import * as THREE from 'three'
 import type { InteractionState } from '@/types'
 
@@ -10,17 +10,14 @@ export function useInteraction() {
     pulse: 0,
   })
 
-  const handlePointerMove = useCallback(
-    (event: PointerEvent<HTMLDivElement>) => {
-      const bounds = event.currentTarget.getBoundingClientRect()
-      const x = (event.clientX - bounds.left) / bounds.width
-      const y = (event.clientY - bounds.top) / bounds.height
+  const handlePointerMove = useCallback((event: PointerEvent<HTMLDivElement>) => {
+    const bounds = event.currentTarget.getBoundingClientRect()
+    const x = (event.clientX - bounds.left) / bounds.width
+    const y = (event.clientY - bounds.top) / bounds.height
 
-      interactionRef.current.pointer.x = x * 2 - 1
-      interactionRef.current.pointer.y = -(y * 2 - 1)
-    },
-    []
-  )
+    interactionRef.current.pointer.x = x * 2 - 1
+    interactionRef.current.pointer.y = -(y * 2 - 1)
+  }, [])
 
   const handlePointerEnter = useCallback(() => {
     interactionRef.current.hoverTarget = 1

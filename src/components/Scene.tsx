@@ -1,10 +1,10 @@
-import { useRef } from 'react'
-import { useFrame } from '@react-three/fiber'
 import { useScroll } from '@react-three/drei'
-import { SriYantraMandala } from './SriYantraMandala'
-import { FractalTunnel } from './FractalTunnel'
+import { useFrame } from '@react-three/fiber'
 import type { MutableRefObject } from 'react'
+import { useRef } from 'react'
 import type { InteractionState, ScrollMetrics } from '@/types'
+import { FractalTunnel } from './FractalTunnel'
+import { SriYantraMandala } from './SriYantraMandala'
 
 interface SceneProps {
   interactionRef: MutableRefObject<InteractionState>
@@ -12,11 +12,7 @@ interface SceneProps {
   particleCount?: number
 }
 
-export function Scene({
-  interactionRef,
-  scrollProgressRef,
-  particleCount,
-}: SceneProps) {
+export function Scene({ interactionRef, scrollProgressRef, particleCount }: SceneProps) {
   const scroll = useScroll()
   const scrollMetricsRef = useRef<ScrollMetrics>({
     velocity: 0,

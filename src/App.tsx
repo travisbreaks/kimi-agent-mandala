@@ -1,24 +1,15 @@
-import { Suspense, useRef } from 'react'
-import { Canvas } from '@react-three/fiber'
 import { PerspectiveCamera, ScrollControls } from '@react-three/drei'
-import { ErrorBoundary, Scene, HUD } from '@/components'
+import { Canvas } from '@react-three/fiber'
+import { Suspense, useRef } from 'react'
+import { ErrorBoundary, HUD, Scene } from '@/components'
 import { ScrollOverlays } from '@/components/ScrollOverlays'
-import {
-  useInteraction,
-  useReducedMotion,
-  useAdaptiveQuality,
-} from '@/hooks'
 import { CAMERA_CONFIG, CANVAS_CONFIG } from '@/constants/config'
+import { useAdaptiveQuality, useInteraction, useReducedMotion } from '@/hooks'
 import './App.css'
 
 function App() {
-  const {
-    interactionRef,
-    handlePointerMove,
-    handlePointerEnter,
-    handlePointerLeave,
-    handlePointerDown,
-  } = useInteraction()
+  const { interactionRef, handlePointerMove, handlePointerEnter, handlePointerLeave, handlePointerDown } =
+    useInteraction()
   const prefersReducedMotion = useReducedMotion()
   const { particleCount } = useAdaptiveQuality(prefersReducedMotion)
   const scrollProgressRef = useRef(0)
@@ -43,11 +34,7 @@ function App() {
             dpr={CANVAS_CONFIG.dpr}
           >
             <Suspense fallback={null}>
-              <PerspectiveCamera
-                makeDefault
-                position={CAMERA_CONFIG.position}
-                fov={CAMERA_CONFIG.fov}
-              />
+              <PerspectiveCamera makeDefault position={CAMERA_CONFIG.position} fov={CAMERA_CONFIG.fov} />
               <ScrollControls pages={4} damping={0.15}>
                 <Scene
                   interactionRef={interactionRef}

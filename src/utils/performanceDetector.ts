@@ -1,5 +1,5 @@
-import type { PerformanceLevel } from '@/types'
 import { PARTICLE_COUNTS } from '@/constants/config'
+import type { PerformanceLevel } from '@/types'
 
 export function detectPerformanceLevel(): PerformanceLevel {
   if (typeof window === 'undefined') {
@@ -36,10 +36,7 @@ export function detectPerformanceLevel(): PerformanceLevel {
       }
 
       // Low-end or integrated GPUs
-      if (
-        rendererLower.includes('intel') ||
-        rendererLower.includes('integrated')
-      ) {
+      if (rendererLower.includes('intel') || rendererLower.includes('integrated')) {
         return 'low'
       }
     }
@@ -59,8 +56,6 @@ export function detectPerformanceLevel(): PerformanceLevel {
   }
 }
 
-export function getParticleCountForPerformance(
-  level: PerformanceLevel
-): number {
+export function getParticleCountForPerformance(level: PerformanceLevel): number {
   return PARTICLE_COUNTS[level]
 }

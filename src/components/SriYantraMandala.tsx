@@ -1,11 +1,11 @@
-import { useRef, useMemo, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
-import * as THREE from 'three'
-import { sandVertexShader, sandFragmentShader } from '@/shaders'
-import { generateSriYantraPositions } from '@/utils'
-import { PARTICLE_COUNTS } from '@/constants/config'
 import type { MutableRefObject } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
+import * as THREE from 'three'
+import { PARTICLE_COUNTS } from '@/constants/config'
+import { sandFragmentShader, sandVertexShader } from '@/shaders'
 import type { InteractionState, ScrollMetrics } from '@/types'
+import { generateSriYantraPositions } from '@/utils'
 
 interface MandalaProps {
   scrollRef: MutableRefObject<number>
@@ -36,10 +36,7 @@ export function SriYantraMandala({
     const geometry = meshRef.current.geometry
 
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-    geometry.setAttribute(
-      'aTargetPosition',
-      new THREE.BufferAttribute(positions.slice(), 3)
-    )
+    geometry.setAttribute('aTargetPosition', new THREE.BufferAttribute(positions.slice(), 3))
     geometry.setAttribute('aStartPosition', new THREE.BufferAttribute(startPositions, 3))
     geometry.setAttribute('aColor', new THREE.BufferAttribute(colors, 3))
     geometry.setAttribute('aScale', new THREE.BufferAttribute(scales, 1))
@@ -58,35 +55,20 @@ export function SriYantraMandala({
       materialRef.current.uniforms.uVelocity.value = scrollMetrics.normalizedSpeed
       materialRef.current.uniforms.uHover.value = interaction.hover
       materialRef.current.uniforms.uPulse.value = interaction.pulse
-      materialRef.current.uniforms.uPointer.value.set(
-        interaction.pointer.x,
-        interaction.pointer.y
-      )
+      materialRef.current.uniforms.uPointer.value.set(interaction.pointer.x, interaction.pointer.y)
     }
 
     if (meshRef.current) {
       // Dampen mesh-level transforms during tunnel phase
       // (per-particle shader positioning takes over)
-      const tunnelDampen =
-        scrollProgress > 0.75
-          ? 1.0 - Math.min((scrollProgress - 0.75) / 0.1, 1.0)
-          : 1.0
+      const tunnelDampen = scrollProgress > 0.75 ? 1.0 - Math.min((scrollProgress - 0.75) / 0.1, 1.0) : 1.0
 
-      spinRef.current +=
-        delta * (0.15 + scrollMetrics.normalizedSpeed * 0.75) * tunnelDampen
+      spinRef.current += delta * (0.15 + scrollMetrics.normalizedSpeed * 0.75) * tunnelDampen
       meshRef.current.rotation.z = spinRef.current * tunnelDampen
 
       const tilt = interaction.hover * 0.35 * tunnelDampen
-      meshRef.current.rotation.x = THREE.MathUtils.lerp(
-        meshRef.current.rotation.x,
-        interaction.pointer.y * tilt,
-        0.08
-      )
-      meshRef.current.rotation.y = THREE.MathUtils.lerp(
-        meshRef.current.rotation.y,
-        interaction.pointer.x * tilt,
-        0.08
-      )
+      meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, interaction.pointer.y * tilt, 0.08)
+      meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, interaction.pointer.x * tilt, 0.08)
 
       const scale = 1 + interaction.pulse * 0.03 * tunnelDampen
       meshRef.current.scale.setScalar(scale)

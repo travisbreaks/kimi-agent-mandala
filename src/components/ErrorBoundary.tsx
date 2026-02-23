@@ -1,4 +1,4 @@
-import { Component, type ReactNode, type ErrorInfo } from 'react'
+import { Component, type ErrorInfo, type ReactNode } from 'react'
 
 interface ErrorBoundaryProps {
   children: ReactNode
@@ -9,10 +9,7 @@ interface ErrorBoundaryState {
   error: Error | null
 }
 
-export class ErrorBoundary extends Component<
-  ErrorBoundaryProps,
-  ErrorBoundaryState
-> {
+export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props)
     this.state = { hasError: false, error: null }
@@ -43,9 +40,7 @@ export class ErrorBoundary extends Component<
           }}
         >
           <div>
-            <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>
-              Something went wrong
-            </h1>
+            <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Something went wrong</h1>
             <p style={{ opacity: 0.7, marginBottom: '1.5rem' }}>
               {this.state.error?.message || 'An unexpected error occurred'}
             </p>

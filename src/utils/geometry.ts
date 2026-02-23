@@ -16,14 +16,7 @@ export function generateSriYantraPositions(count: number): GeometryData {
   let index = 0
 
   // Helper to add particle
-  const addParticle = (
-    x: number,
-    y: number,
-    z: number,
-    colorIdx: number,
-    scale: number,
-    _phase: number
-  ) => {
+  const addParticle = (x: number, y: number, z: number, colorIdx: number, scale: number, _phase: number) => {
     if (index >= count) return false
     const color = MANDALA_COLOR_PALETTE[colorIdx % MANDALA_COLOR_PALETTE.length]
     positions.push(x, y, z)
@@ -38,11 +31,7 @@ export function generateSriYantraPositions(count: number): GeometryData {
     // Camera at Z=4, FOV=60 → frustum half-width at Z=0 ≈ 2.3 units
     const ringRadius = 3.0 + Math.random() * 2.0 // radius 3.0-5.0, all off-screen
     const ringAngle = Math.random() * Math.PI * 2
-    startPositions.push(
-      Math.cos(ringAngle) * ringRadius,
-      Math.sin(ringAngle) * ringRadius,
-      (Math.random() - 0.5) * 0.2
-    )
+    startPositions.push(Math.cos(ringAngle) * ringRadius, Math.sin(ringAngle) * ringRadius, (Math.random() - 0.5) * 0.2)
 
     index++
     return true
@@ -69,9 +58,7 @@ export function generateSriYantraPositions(count: number): GeometryData {
 
     for (let t = 0; t < trianglesPerLayer; t++) {
       const triangleAngle = (t / trianglesPerLayer) * Math.PI * 2
-      const particlesPerTriangle = Math.floor(
-        triangleCount / (triangleLayers * trianglesPerLayer)
-      )
+      const particlesPerTriangle = Math.floor(triangleCount / (triangleLayers * trianglesPerLayer))
 
       for (let p = 0; p < particlesPerTriangle; p++) {
         // Triangle shape distribution
@@ -135,7 +122,7 @@ export function generateSriYantraPositions(count: number): GeometryData {
             z,
             layer % MANDALA_COLOR_PALETTE.length,
             0.9 + Math.random() * 0.6,
-            Math.random()
+            Math.random(),
           )
         )
           break
@@ -162,16 +149,7 @@ export function generateSriYantraPositions(count: number): GeometryData {
       const tx = x + (Math.random() - 0.5) * thickness
       const ty = y + (Math.random() - 0.5) * thickness
 
-      if (
-        !addParticle(
-          tx,
-          ty,
-          z,
-          (r + 3) % MANDALA_COLOR_PALETTE.length,
-          0.8 + Math.random() * 0.5,
-          Math.random()
-        )
-      )
+      if (!addParticle(tx, ty, z, (r + 3) % MANDALA_COLOR_PALETTE.length, 0.8 + Math.random() * 0.5, Math.random()))
         break
     }
   }
@@ -201,16 +179,7 @@ export function generateSriYantraPositions(count: number): GeometryData {
       const y = Math.sin(finalAngle) * petalR
       const z = (Math.random() - 0.5) * 0.02
 
-      if (
-        !addParticle(
-          x,
-          y,
-          z,
-          (petal + 5) % MANDALA_COLOR_PALETTE.length,
-          0.8 + Math.random() * 0.4,
-          Math.random()
-        )
-      )
+      if (!addParticle(x, y, z, (petal + 5) % MANDALA_COLOR_PALETTE.length, 0.8 + Math.random() * 0.4, Math.random()))
         break
     }
   }
@@ -254,17 +223,7 @@ export function generateSriYantraPositions(count: number): GeometryData {
     y += (Math.random() - 0.5) * 0.03
     const z = (Math.random() - 0.5) * 0.02
 
-    if (
-      !addParticle(
-        x,
-        y,
-        z,
-        7,
-        0.8 + Math.random() * 0.4,
-        Math.random()
-      )
-    )
-      break
+    if (!addParticle(x, y, z, 7, 0.8 + Math.random() * 0.4, Math.random())) break
   }
 
   // 6. Outer circle ring
@@ -278,8 +237,7 @@ export function generateSriYantraPositions(count: number): GeometryData {
     const y = Math.sin(angle) * r
     const z = (Math.random() - 0.5) * 0.02
 
-    if (!addParticle(x, y, z, 8, 0.7 + Math.random() * 0.4, Math.random()))
-      break
+    if (!addParticle(x, y, z, 8, 0.7 + Math.random() * 0.4, Math.random())) break
   }
 
   // 7. Fill remaining with decorative elements
@@ -297,7 +255,7 @@ export function generateSriYantraPositions(count: number): GeometryData {
         z,
         Math.floor(Math.random() * MANDALA_COLOR_PALETTE.length),
         0.7 + Math.random() * 0.4,
-        Math.random()
+        Math.random(),
       )
     )
       break

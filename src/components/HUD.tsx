@@ -1,5 +1,5 @@
-import { useRef, useEffect } from 'react'
 import type { MutableRefObject } from 'react'
+import { useEffect, useRef } from 'react'
 
 interface HUDProps {
   scrollProgressRef: MutableRefObject<number>
@@ -35,12 +35,16 @@ export function HUD({ scrollProgressRef }: HUDProps) {
       <div className="hud-title">MANDALA TRANSMISSION</div>
       <div className="hud-row">
         <span className="hud-label">DEPTH</span>
-        <span className="hud-state live" ref={percentRef}>0%</span>
+        <span className="hud-state live" ref={percentRef}>
+          0%
+        </span>
       </div>
       <div className="hud-meter">
         <div className="hud-meter-fill" ref={fillRef} style={{ transform: 'scaleX(0)' }} />
       </div>
-      <a href="../" className="hud-back">← Research</a>
+      <a href="../" className="hud-back">
+        ← Research
+      </a>
     </div>
   )
 }

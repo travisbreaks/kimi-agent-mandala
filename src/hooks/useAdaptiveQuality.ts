@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react'
-import { detectPerformanceLevel, getParticleCountForPerformance } from '@/utils'
+import { useEffect, useState } from 'react'
 import { PARTICLE_COUNTS } from '@/constants/config'
 import type { PerformanceLevel } from '@/types'
+import { detectPerformanceLevel, getParticleCountForPerformance } from '@/utils'
 
 export function useAdaptiveQuality(prefersReducedMotion: boolean) {
-  const [performanceLevel, setPerformanceLevel] =
-    useState<PerformanceLevel>('medium')
+  const [performanceLevel, setPerformanceLevel] = useState<PerformanceLevel>('medium')
   const [particleCount, setParticleCount] = useState(PARTICLE_COUNTS.medium)
 
   useEffect(() => {

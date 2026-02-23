@@ -1,5 +1,5 @@
-import { useRef, useEffect } from 'react'
 import type { MutableRefObject } from 'react'
+import { useEffect, useRef } from 'react'
 
 interface ScrollOverlaysProps {
   scrollProgressRef: MutableRefObject<number>
@@ -25,11 +25,11 @@ export function ScrollOverlays({ scrollProgressRef }: ScrollOverlaysProps) {
         let opacity = 1
         let yOffset = 0
 
-        if (p < 0.10) {
+        if (p < 0.1) {
           opacity = 1
           yOffset = 0
         } else if (p < 0.25) {
-          const t = (p - 0.10) / 0.15
+          const t = (p - 0.1) / 0.15
           opacity = 1 - t
           yOffset = -t * 40
         } else {
@@ -51,18 +51,18 @@ export function ScrollOverlays({ scrollProgressRef }: ScrollOverlaysProps) {
         let opacity = 0
         let yOffset = 40
 
-        if (p < 0.60) {
+        if (p < 0.6) {
           opacity = 0
           yOffset = 40
         } else if (p < 0.75) {
-          const t = (p - 0.60) / 0.15
+          const t = (p - 0.6) / 0.15
           opacity = t
           yOffset = 40 * (1 - t)
-        } else if (p < 0.80) {
+        } else if (p < 0.8) {
           opacity = 1
           yOffset = 0
         } else if (p < 0.85) {
-          const t = (p - 0.80) / 0.05
+          const t = (p - 0.8) / 0.05
           opacity = 1 - t
           yOffset = 0 // stay in place, just fade
         } else {
@@ -106,8 +106,7 @@ export function ScrollOverlays({ scrollProgressRef }: ScrollOverlaysProps) {
         }
 
         card3Ref.current.style.opacity = String(opacity)
-        card3Ref.current.style.transform =
-          `translate(-50%, -50%) translateY(${yOffset}vh) perspective(500px) rotateX(${rotateX}deg) scale(${scale})`
+        card3Ref.current.style.transform = `translate(-50%, -50%) translateY(${yOffset}vh) perspective(500px) rotateX(${rotateX}deg) scale(${scale})`
       }
 
       // Flash overlay:
@@ -158,9 +157,7 @@ export function ScrollOverlays({ scrollProgressRef }: ScrollOverlaysProps) {
         <div className="phase-content">
           <p className="eyebrow">PHASE 02</p>
           <h2 className="title">The Infinite</h2>
-          <p className="subtitle">
-            The mandala dissolves into the cosmic tunnel
-          </p>
+          <p className="subtitle">The mandala dissolves into the cosmic tunnel</p>
         </div>
       </div>
 

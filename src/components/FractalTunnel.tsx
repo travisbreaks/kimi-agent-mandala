@@ -1,14 +1,10 @@
-import { useRef, useEffect } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
+import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
-import { tunnelVertexShader, tunnelFragmentShader } from '@/shaders'
+import { tunnelFragmentShader, tunnelVertexShader } from '@/shaders'
 import type { TunnelProps } from '@/types'
 
-export function FractalTunnel({
-  scrollRef,
-  scrollMetricsRef,
-  interactionRef,
-}: TunnelProps) {
+export function FractalTunnel({ scrollRef, scrollMetricsRef, interactionRef }: TunnelProps) {
   const meshRef = useRef<THREE.Mesh | null>(null)
   const materialRef = useRef<THREE.ShaderMaterial | null>(null)
   const { viewport, size } = useThree()
@@ -24,14 +20,10 @@ export function FractalTunnel({
     if (materialRef.current) {
       materialRef.current.uniforms.uTime.value = state.clock.elapsedTime
       materialRef.current.uniforms.uScrollProgress.value = scrollRef.current
-      materialRef.current.uniforms.uVelocity.value =
-        scrollMetricsRef.current.normalizedSpeed
+      materialRef.current.uniforms.uVelocity.value = scrollMetricsRef.current.normalizedSpeed
       materialRef.current.uniforms.uHover.value = interaction.hover
       materialRef.current.uniforms.uPulse.value = interaction.pulse
-      materialRef.current.uniforms.uPointer.value.set(
-        interaction.pointer.x,
-        interaction.pointer.y
-      )
+      materialRef.current.uniforms.uPointer.value.set(interaction.pointer.x, interaction.pointer.y)
     }
   })
 
