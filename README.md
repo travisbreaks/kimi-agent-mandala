@@ -2,9 +2,13 @@
 
 An interactive 3D visualization of a Sri Yantra mandala that responds to scroll, hover, and click interactions. Built with React Three Fiber and custom WebGL shaders.
 
-![kimi-agent-mandala](https://assets.travisbreaks.com/github/kimi-agent-mandala.png)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://travisbreaks.org/research/kimi-agent-mandala/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![React](https://img.shields.io/badge/React-19-61dafb)](https://react.dev)
+[![Three.js](https://img.shields.io/badge/Three.js-r182-black)](https://threejs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)](https://typescriptlang.org)
 
-**[Live Demo](https://travisbreaks.org/research/kimi-agent-mandala/)**
+![kimi-agent-mandala](https://assets.travisbreaks.com/github/kimi-agent-mandala.png)
 
 ## Features
 
