@@ -8,7 +8,6 @@ An interactive 3D visualization of a Sri Yantra mandala that responds to scroll,
 [![Three.js](https://img.shields.io/badge/Three.js-r182-black)](https://threejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)](https://typescriptlang.org)
 
-![kimi-agent-mandala](https://assets.travisbreaks.com/github/kimi-agent-mandala.png)
 
 ## Features
 
@@ -59,7 +58,7 @@ An interactive 3D visualization of a Sri Yantra mandala that responds to scroll,
 
 ```bash
 # Clone or download the project
-cd Kimi_Agent_Mandala
+cd kimi-agent-mandala
 
 # Install dependencies
 npm install
@@ -88,7 +87,7 @@ npm run preview
 
 ```
 src/
-├── App.tsx                    # Main application component (~114 lines)
+├── App.tsx                    # Main application component
 ├── App.css                    # Styles
 ├── main.tsx                   # Entry point
 ├── index.css                  # Global styles
@@ -109,7 +108,6 @@ src/
 │   └── index.ts               # All type exports
 │
 ├── hooks/                     # React hooks
-│   ├── useScrollTelemetry.ts  # Scroll tracking & velocity
 │   ├── useInteraction.ts      # Pointer event handling
 │   ├── useReducedMotion.ts    # Accessibility detection
 │   └── useAdaptiveQuality.ts  # Performance-based quality
@@ -121,9 +119,10 @@ src/
     ├── SriYantraMandala.tsx   # Mandala particle system
     ├── FractalTunnel.tsx      # Background tunnel effect
     ├── HUD.tsx                # Scroll velocity display
-    ├── PhaseIndicator.tsx     # BUILD/EXPLODE indicator
-    └── ProgressBar.tsx        # Scroll progress bar
+    └── ScrollOverlays.tsx     # Phase indicator and progress bar, driven by scroll progress
 ```
+
+Each folder also carries an `index.ts` barrel. The tree above matches the repository as of 2026-09-07.
 
 ## How It Works
 
@@ -162,11 +161,9 @@ Each particle has:
 
 ### Scroll System
 
-The scroll telemetry system tracks:
+Scrolling is driven by drei's `ScrollControls` in `App.tsx`. The scroll offset is written into a `scrollProgressRef` that the `HUD` and `ScrollOverlays` components read each frame:
 - **Progress**: 0 to 1 (where 0.5 is the transition point)
-- **Velocity**: Pixels per second (smoothed)
-- **Direction**: Up, Down, or Idle
-- **Speed**: Normalized 0-1 based on max velocity (2400px/s)
+- **Speed**: normalized against `SCROLL_CONFIG.maxVelocity` (2400px/s) in `src/constants/config.ts`
 
 ## Performance Notes
 
